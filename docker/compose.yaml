@@ -1,0 +1,31 @@
+# ─────────────────────────────────────────────────────────────────
+# nextcloud — Docker Compose merge fragment
+#
+# This file is merged into the main docker-compose.yaml by sovctl:
+#   sovctl package install nextcloud
+#
+# Manual usage:
+#   docker compose -f docker-compose.yaml -f packages/nextcloud/docker/compose.yaml up -d
+# ─────────────────────────────────────────────────────────────────
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: sovereign-nextcloud
+    restart: unless-stopped
+    ports:
+      - "${NEXTCLOUD_PORT:-80}:80"
+    environment:
+      - TZ=${TZ:-UTC}
+    volumes:
+      - nextcloud-data:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.nextcloud.rule=Host(`nextcloud.${SOV_HOST:-sovereign.local}`)
+      - traefik.http.routers.nextcloud.entrypoints=websecure
+      - traefik.http.routers.nextcloud.tls.certresolver=letsencrypt
+    networks:
+      - sovereign
+
+volumes:
+  nextcloud-data:
+    driver: local

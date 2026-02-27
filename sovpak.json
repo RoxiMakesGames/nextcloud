@@ -1,0 +1,36 @@
+{
+  "$schema": "https://sovereign.dev/schemas/package/1.0.0",
+  "id": "nextcloud",
+  "name": "Nextcloud",
+  "version": "1.0.0",
+  "description": "Nextcloud file storage, calendar, and collaboration integration",
+  "license": "AGPL-3.0",
+  "author": {
+    "name": "Sovereign Infrastructure Team",
+    "url": "https://opensovereign.dev"
+  },
+  "kind": "package",
+  "taxonomy": {
+    "tier": "opt",
+    "relations": [
+      { "type": "depends", "target": "sovctl" }
+    ]
+  },
+  "tags": ["service", "storage", "collaboration"],
+  "upstream": {
+    "name": "Nextcloud",
+    "homepage": "https://nextcloud.com",
+    "license": "AGPL-3.0"
+  },
+  "contents": {
+    "plugin": null,
+    "gitops": {
+      "kustomization": "k8s/kustomization.yaml",
+      "resources": "k8s/"
+    },
+    "container": {
+      "image": "nextcloud:latest",
+      "compose": "docker/compose.yaml"
+    }
+  }
+}
