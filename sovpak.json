@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/RoxiMakesGames/sovpak/main/schema/sovpak-v3.schema.json",
+  "$schema": "https://sovereign.dev/schemas/package/4.0.0",
   "id": "nextcloud",
   "name": "Nextcloud",
   "version": "1.0.0",
@@ -29,15 +29,20 @@
     "homepage": "https://nextcloud.com",
     "license": "AGPL-3.0"
   },
-  "contents": {
-    "plugin": null,
-    "gitops": {
-      "kustomization": "k8s/kustomization.yaml",
-      "resources": "k8s/"
+  "deployments": [
+    {
+      "platform": "kubernetes",
+      "path": "k8s/",
+      "files": {
+        "kustomization": "kustomization.yaml"
+      }
     },
-    "container": {
-      "image": "nextcloud:latest",
-      "compose": "docker/compose.yaml"
+    {
+      "platform": "docker",
+      "path": "docker/",
+      "files": {
+        "compose": "compose.yaml"
+      }
     }
-  }
+  ]
 }
